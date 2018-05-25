@@ -12,3 +12,4 @@ target/
 .pydevproject
 *.conf
 .DS_Store
+/bin/
