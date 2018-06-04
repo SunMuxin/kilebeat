@@ -59,7 +59,7 @@ public class GraphiteEndpointActor extends GuiceAbstractActor {
 					}
 										
 					//see http://graphite.readthedocs.io/en/latest/feeding-carbon.html#getting-your-data-into-graphite					
-					writer.write(s.getPath() + " " + s.getContent().length() +  " " + s.getRs_timestamp() + "\n"); 
+					writer.write(s.getPath_s() + " " + s.getContent_s().length() +  " " + s.getRs_timestamp() + "\n"); 
 					writer.flush();
 					
 				}

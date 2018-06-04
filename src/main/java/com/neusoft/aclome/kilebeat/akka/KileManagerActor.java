@@ -42,8 +42,6 @@ public class KileManagerActor extends GuiceAbstractActor {
 	public Receive createReceive() {
 		return receiveBuilder()
 			.match(String.class, p -> {
-				System.err.println(p);
-
 				File f = new File(p);
 				
 				if (kilebeats.containsKey(p)) {

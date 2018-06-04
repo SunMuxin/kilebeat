@@ -38,10 +38,10 @@ public class TailerActor extends GuiceAbstractActor implements TailerListener {
 	private static final boolean FROM_END = true;
 	private static final boolean RE_OPEN = true;
 
-	private final SingleConfiguration conf;	
+	private final SingleConfiguration conf;
 	private final Tailer tailer;	
 	private Router router;
-		
+	
 	public TailerActor(SingleConfiguration conf) {
 		this.conf = conf;
 		
@@ -88,8 +88,8 @@ public class TailerActor extends GuiceAbstractActor implements TailerListener {
 			.match(NewLineEvent.class, s -> { //from self
 				//LOGGER.info("[row] {}", s);
 				
-				if (conf.getRules().mustBeSent(s.getContent())) {
-					router.route(s, ActorRef.noSender());	
+				if (conf.getRules().mustBeSent(s.getContent_s())) {
+					router.route(s, ActorRef.noSender());
 				}
 			})
 			.match(Terminated.class, t -> {	//from any childs			

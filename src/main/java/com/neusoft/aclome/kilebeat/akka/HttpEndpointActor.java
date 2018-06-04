@@ -61,7 +61,7 @@ public class HttpEndpointActor extends GuiceAbstractActor {
 	}
 
 	private ClientResponse send(NewLineEvent s) {
-		return new RetryCommand(3, s.getPath()).run(() -> {
+		return new RetryCommand(3, s.getPath_s()).run(() -> {
 			final WebResource resource = client.resource(conf.getPath());
 			
 			final ClientResponse response = resource

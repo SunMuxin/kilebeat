@@ -68,7 +68,7 @@ public class ConfigWatcherActor extends GuiceAbstractActor {
 		LOGGER.info("### build new KileBeatActor for " + path);				
 
 		system
-			.actorSelection("/user/manager")
+			.actorSelection("/user/kile-beat")
 			.tell(path, ActorRef.noSender());
 	}
 			

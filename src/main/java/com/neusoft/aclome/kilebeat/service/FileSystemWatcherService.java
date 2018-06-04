@@ -84,10 +84,9 @@ public class FileSystemWatcherService implements AutoCloseable {
 			final WatchService wService = path.getFileSystem().newWatchService();
 			
 			keys.put(conf, path.register(wService, ENTRY_CREATE));
-			watchers.put(conf, wService);			
+			watchers.put(conf, wService);
 			
-			return 
-			Files
+			return Files
 				.list(path)
 				.map(p -> related(conf, p))
 				.filter(o -> o.isPresent())

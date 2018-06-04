@@ -12,8 +12,12 @@ public class ActorNamesFactory {
 		return "kile" + rand();
 	}
 	
+	public static String scanner(){
+		return "scanner" + rand();
+	}
+	
 	private static String rand() {
-		return RandomStringUtils.random(4, false, true);
+		return RandomStringUtils.random(20, false, true);
 	}
 
 }

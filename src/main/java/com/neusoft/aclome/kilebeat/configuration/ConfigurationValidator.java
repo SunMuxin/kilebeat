@@ -38,34 +38,42 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public final class ConfigurationValidator {	
 	
+	public ValidationResponse isValidExports(File configuration) {
+		return isValid(configuration, "exports");
+	}
+	
+	public ValidationResponse isValidScans(File configuration) {
+		return isValid(configuration, "scans");
+	}
+	
 	/**  
 	    * @Title: isValid  
 	    * @Description: add SolrEndpointActor
-	    * @param configuration
+	    * @param configuration, conf_key
 	    * @return ValidationResponse  
 	*/
-	public ValidationResponse isValid(File configuration) {
+	public ValidationResponse isValid(File configuration, String conf_key) {
+		
 		if (!configuration.exists()) {
 			throw new IllegalArgumentException("configuration file absent");
 		}
 
 		final Config load = ConfigFactory.parseFile(configuration);
-		if (load.isEmpty() || !load.hasPath("exports")) {
+		if (load.isEmpty() || !load.hasPath(conf_key)) {
 			throw new IllegalArgumentException("configuration file not valid");
 		}
 		
 		@SuppressWarnings("unchecked")
-		final List<ConfigObject> exports = (List<ConfigObject>) load.getObjectList("exports");
-		if (exports.isEmpty()) {
+		final List<ConfigObject> conf_value = (List<ConfigObject>) load.getObjectList(conf_key);
+		if (conf_value.isEmpty()) {
 			throw new IllegalArgumentException("configuration file not valid");
 		}
 		
 		final ValidationResponse response = new ValidationResponse();
-		
-		IntStream.range(0, exports.size())
+		IntStream.range(0, conf_value.size())
 			.forEachOrdered(i -> {
 				
-				final Config eConfig = exports.get(i).toConfig();
+				final Config eConfig = conf_value.get(i).toConfig();
 				LOGGER.debug("{}° => {}", i, eConfig);
 				
 				/*
@@ -75,7 +83,7 @@ public final class ConfigurationValidator {
 				boolean hasPath = eConfig.hasPath("path");
 				
 				if (!hasPath) {
-					response.addError(i, String.format("%d element does not contains %s", i, "path"));
+					response.addError(i, String.format("%d element does not contains %s or %s", i, "path", "scan"));
 				}
 				
 				boolean hasHttp = eConfig.hasPath("http");
@@ -210,6 +218,7 @@ public final class ConfigurationValidator {
 		private void addConfiguration(int i, Config c) {
 			final SendRules rules = new SendRules();
 			
+						
 			if (c.hasPath("send-if-match")) {
 				rules.addMatch(Pattern.compile(c.getString("send-if-match")));
 			}
@@ -225,9 +234,10 @@ public final class ConfigurationValidator {
 			
 			final SingleConfiguration build = new SingleConfiguration(c.getString("path"), rules, bulk);
 			
-			Arrays.stream(Endpoint.values()).forEach(e -> {				
+			Arrays.stream(Endpoint.values()).forEach(e -> {		
+
 				final Config config = c.hasPath(e.getConfKey()) ? c.getObject(e.getConfKey()).toConfig() : null;
-				
+
 				//XXX potrebbe diventare if (config != null) {
 				//visto che la validazione è fatta a priori!!!
 				

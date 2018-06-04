@@ -2,6 +2,7 @@ package com.neusoft.aclome.kilebeat.util;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -14,9 +15,13 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
@@ -239,6 +244,54 @@ public class Util {
 		client.close();
 		
 		return res.toString();
+	}
+	
+	public static List<File> scanLogger(String configName) {
+		File config = new File(configName);
+		Path currPath = new File(config.getParent()).toPath();
+		return scanLogger(config, currPath);
+	}
+		
+	public static List<File> scanLogger(File config, Path currPath) {
+
+		List<File> files = new ArrayList<File>();
+		try {
+			for (File file : currPath.toFile().listFiles()) {
+				if (file.isFile()) {
+					Optional<File> temp_file = related(config, file.toPath());
+					if (temp_file.isPresent()) files.add(temp_file.get());
+
+				} else if (file.isDirectory()) {
+					files.addAll(scanLogger(config, file.toPath()));
+				}
+			}
+		} catch (NullPointerException e) {
+			return files;
+		}
+		return files;
+	}
+	
+	private static Optional<File> related(File config, final Path path) {
+		final File initialResource = config;				
+		final String currentName = path.toFile().getName();
+		
+		final File newSc;
+		if (match(initialResource.getName(), currentName)) {
+			newSc = path.toFile();
+		} else {
+			newSc = null;
+		}
+		
+		return Optional.ofNullable(newSc);
+	}
+	
+	//XXX until new idea, we only support '?' and '*' placeholders
+	//see https://stackoverflow.com/questions/34514650/wildcard-search-using-replace-function
+	private static boolean match(String configName, String fileName) {	
+		final String regex = configName.replace("?", ".?").replace("*", ".*?");		
+		final Pattern pattern = Pattern.compile(regex);
+		
+		return pattern.matcher(fileName).matches();
 	}
 }
 

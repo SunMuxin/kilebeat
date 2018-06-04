@@ -4,12 +4,11 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.nio.file.Path;
 import java.util.Enumeration;
+import java.util.List;
 
 import org.apache.http.conn.util.InetAddressUtils;
 
-import com.neusoft.aclome.kilebeat.util.LoggerUtil;
 import com.neusoft.aclome.kilebeat.util.TimeUtil;
 
 import lombok.Getter;
@@ -17,18 +16,17 @@ import lombok.ToString;
 
 @Getter
 @ToString
-public class NewLineEvent {
-	private final String result_s = "logger";
-
+public class NewScanEvent {
+	private final String result_s = "scanner";
+	
 	private String ip_s;
 	private String host_s;
-	private String content_s;
-	private String level_s;
 	private String rs_timestamp;
-	private String path_s;
-	
-	public NewLineEvent(String line, Path path) {
-		
+	private List<String> path_ss;
+	private String scan_path_s;
+
+	public NewScanEvent(String scan_path_s, List<String> path_ss) {
+
 		try {
 			Enumeration<NetworkInterface> allNetInterfaces = NetworkInterface.getNetworkInterfaces();
 			while (allNetInterfaces.hasMoreElements()) {
@@ -49,10 +47,13 @@ public class NewLineEvent {
 			this.ip_s = null;
 			this.host_s = null;
 		}
-
-		this.content_s = LoggerUtil.parseContent(line).map(c -> c).orElse(null);
-		this.level_s = LoggerUtil.parseLevel(line).map(c -> c).orElse(null);
-		this.path_s = path.toString().replace('\\', '/');
+		
+		this.scan_path_s = scan_path_s;
+		this.path_ss = path_ss;
 		this.rs_timestamp = TimeUtil.formatUnixtime2(System.currentTimeMillis());
+	}
+	
+	public void addPath(String path) {
+		path_ss.add(path);
 	}
 }

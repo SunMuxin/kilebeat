@@ -23,7 +23,7 @@ public class KileBeatApplication {
     
 	@Inject
 	public KileBeatApplication(Injector injector) {
-		this.system = ActorSystem.create("kile", ConfigFactory.load());
+		this.system = ActorSystem.create("kile", ConfigFactory.load("akka"));
 		this.injector = injector;
 	}
 	

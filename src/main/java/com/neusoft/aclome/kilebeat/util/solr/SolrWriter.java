@@ -40,7 +40,7 @@ public class SolrWriter{
 	}
 	
 	public SolrWriter(String SOLR_URL, String username, String password) {
-		this(SOLR_URL, username, password, 10);
+		this(SOLR_URL, username, password, 1000);
 	}
 	
 	public SolrWriter(String SOLR_URL) {

@@ -23,9 +23,9 @@ public enum Endpoint {
 	GRAPHITE("graphite", GraphiteEndPointConfiuration.class, GraphiteEndpointActor.class),
 	
 	/**  
-	    * @Fields push data to solr collection  
-		* @author Muxin Sun
-		* @date 2018-05-22
+    * @Fields push data to solr collection  
+	* @author Muxin Sun
+	* @date 2018-05-22
 	*/  
 	SOLR("solr", SolrEndPointConfiuration.class, SolrEndpointActor.class);
 

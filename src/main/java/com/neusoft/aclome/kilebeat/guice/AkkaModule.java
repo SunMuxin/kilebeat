@@ -22,11 +22,10 @@ public class AkkaModule implements Module {
 	@Override
 	public void configure(Binder binder) {
 		
-		final ValidationResponse validResp = new ConfigurationValidator().isValid(new File(config));		
+		final ValidationResponse validResp = new ConfigurationValidator().isValidExports(new File(config));		
 		
 		if (!validResp.isValid()) {
 			System.err.println("config.file is INVALID ... exit!!?");
-			System.exit(-1);
 		}
 		
 		binder
