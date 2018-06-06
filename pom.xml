@@ -16,9 +16,9 @@
     <packaging>jar</packaging>
 
     <groupId>com.neusoft.aclome</groupId>
-    <artifactId>kilebeat</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
-    <name>KileBeat</name>
+    <artifactId>nilebeat</artifactId>
+    <version>1.0.2-SNAPSHOT</version>
+    <name>NileBeat</name>
     <description>filebeat in java with akka</description>
 
     <properties>
@@ -52,7 +52,7 @@
             <version>1.7.12</version>
         </dependency>
 
-        <!-- http -->
+        <!-- http -->        
         <dependency>
             <groupId>com.typesafe.akka</groupId>
             <artifactId>akka-http-core_2.11</artifactId>
@@ -70,6 +70,16 @@
         </dependency>
 	
 		<!-- akka -->
+		<dependency>
+            <groupId>com.typesafe.akka</groupId>
+            <artifactId>akka-actor_2.11</artifactId>
+            <version>${akka.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.typesafe.akka</groupId>
+            <artifactId>akka-contrib_2.11</artifactId>
+            <version>${akka.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.typesafe.akka</groupId>
             <artifactId>akka-cluster_2.11</artifactId>

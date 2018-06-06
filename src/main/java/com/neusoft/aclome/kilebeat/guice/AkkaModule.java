@@ -1,31 +1,31 @@
 package com.neusoft.aclome.kilebeat.guice;
 
-import java.io.File;
-
 import com.google.inject.Binder;
 import com.google.inject.Module;
 import com.google.inject.Singleton;
 import com.neusoft.aclome.kilebeat.akka.ConfigWatcherActor;
-import com.neusoft.aclome.kilebeat.configuration.ConfigurationValidator;
-import com.neusoft.aclome.kilebeat.configuration.ConfigurationValidator.ExportsConfiguration;
-import com.neusoft.aclome.kilebeat.configuration.ConfigurationValidator.ValidationResponse;
+import com.neusoft.aclome.kilebeat.configuration.ExportsConfigurationValidator;
+import com.neusoft.aclome.kilebeat.configuration.EndpointsConfigurationValidator;
+import com.neusoft.aclome.kilebeat.configuration.EndpointsConfigurationValidator.EndpointsConfiguration;
+import com.neusoft.aclome.kilebeat.configuration.EndpointsConfigurationValidator.EndpointsValidationResponse;
+import com.neusoft.aclome.kilebeat.configuration.ExportsConfigurationValidator.ExportsConfiguration;
+import com.neusoft.aclome.kilebeat.configuration.ExportsConfigurationValidator.ExportsValidationResponse;
 import com.neusoft.aclome.kilebeat.service.FileSystemWatcherService;
+import com.typesafe.config.ConfigFactory;
 
-public class AkkaModule implements Module {
-	
-	public final String config;
-	
-	public AkkaModule(String config){
-		this.config = config;
-	}
+public class AkkaModule implements Module {	
 	
 	@Override
 	public void configure(Binder binder) {
 		
-		final ValidationResponse validResp = new ConfigurationValidator().isValidExports(new File(config));		
-		
-		if (!validResp.isValid()) {
+		final ExportsValidationResponse exportsValidResp = 
+				new ExportsConfigurationValidator().isValidExports(ConfigFactory.load("nilebeat"));		
+		final EndpointsValidationResponse endpointValidResp = 
+				new EndpointsConfigurationValidator().isValidEndpoint(ConfigFactory.load("nilebeat"));
+			
+		if (!exportsValidResp.isValid() || !endpointValidResp.isValid()) {
 			System.err.println("config.file is INVALID ... exit!!?");
+			System.exit(-1);
 		}
 		
 		binder
@@ -38,7 +38,11 @@ public class AkkaModule implements Module {
 		
 		binder
 			.bind(ExportsConfiguration.class)
-			.toInstance(validResp.getConfig());
+			.toInstance(exportsValidResp.getConfig());
+		
+		binder
+			.bind(EndpointsConfiguration.class)
+			.toInstance(endpointValidResp.getConfig());
 		
 	}
 }

@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import com.neusoft.aclome.kilebeat.configuration.ConfigurationValidator.Bulk;
+import com.neusoft.aclome.kilebeat.configuration.EndpointsConfigurationValidator.Bulk;
 import com.neusoft.aclome.kilebeat.guice.GuiceAbstractActor;
 
 import akka.actor.ActorRef;
@@ -31,7 +31,7 @@ public class BulkTimeoutActor extends GuiceAbstractActor {
 				
 				if (mapping.containsKey(sender)) {
 					mapping.remove(sender);
-				} else {					
+				} else {		
 					final int bTimeout = bConf.getTimeout();
 					
 					if (bTimeout > 0) {

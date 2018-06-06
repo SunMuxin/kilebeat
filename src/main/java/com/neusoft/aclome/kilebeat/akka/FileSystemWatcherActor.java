@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import com.google.inject.Inject;
-import com.neusoft.aclome.kilebeat.configuration.ConfigurationValidator.ExportsConfiguration;
-import com.neusoft.aclome.kilebeat.configuration.ConfigurationValidator.SingleConfiguration;
+import com.neusoft.aclome.kilebeat.configuration.ExportsConfigurationValidator.ExportsConfiguration;
+import com.neusoft.aclome.kilebeat.configuration.ExportsConfigurationValidator.SingleConfiguration;
 import com.neusoft.aclome.kilebeat.guice.GuiceAbstractActor;
 import com.neusoft.aclome.kilebeat.service.FileSystemWatcherService;
 
@@ -21,12 +21,13 @@ public class FileSystemWatcherActor extends GuiceAbstractActor {
 	private static final String SCHEDULATION_WATCH = "SchedulationsWatch";
 		
 	private final FileSystemWatcherService service;
+	
 	private final ActorSystem system = getContext().system();
 	private Cancellable schedule;
 	
 	@Inject
 	public FileSystemWatcherActor(ExportsConfiguration config, FileSystemWatcherService service) throws IOException {
-		this.service = service;		
+		this.service = service;
 				
 		this.schedule = system.scheduler().scheduleOnce(FiniteDuration.create(30, TimeUnit.SECONDS), 
 			getSelf(), SCHEDULATION_WATCH, system.dispatcher(), getSelf());
@@ -49,7 +50,7 @@ public class FileSystemWatcherActor extends GuiceAbstractActor {
 		super.postStop();
 		LOGGER.info("end {} ", getSelf().path());
 		
-		service.close();		
+		service.close();
 		schedule.cancel();
 	}
 	

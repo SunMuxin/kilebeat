@@ -11,7 +11,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @EqualsAndHashCode
-public class KafkaEndPointConfiuration implements ConfigurationEndpoint {
+public class KafkaEndPointConfiuration implements EndpointConfiguration {
 	private String queue;
 	private String host;
 	

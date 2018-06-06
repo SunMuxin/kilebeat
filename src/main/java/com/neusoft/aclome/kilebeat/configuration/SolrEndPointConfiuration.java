@@ -19,7 +19,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @EqualsAndHashCode
-public class SolrEndPointConfiuration implements ConfigurationEndpoint {
+public class SolrEndPointConfiuration implements EndpointConfiguration {
 	
 	private String url;
 	private String core;

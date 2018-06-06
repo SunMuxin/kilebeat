@@ -1,5 +1,6 @@
 package com.neusoft.aclome.kilebeat.akka.dto;
 
+import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -17,7 +18,14 @@ import lombok.ToString;
 
 @Getter
 @ToString
-public class NewLineEvent {
+public class NewLineEvent implements Serializable {
+	/**  
+     * @Fields {todo}(用一句话描述这个变量表示什么)  
+	 * @author Muxin Sun
+	 * @date 2018年6月6日
+	*/  
+	private static final long serialVersionUID = 4328234078076514941L;
+
 	private final String result_s = "logger";
 
 	private String ip_s;

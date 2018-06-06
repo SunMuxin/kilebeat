@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
-import com.neusoft.aclome.kilebeat.configuration.ConfigurationValidator.SingleConfiguration;
+import com.neusoft.aclome.kilebeat.configuration.ExportsConfigurationValidator.SingleConfiguration;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -97,8 +97,8 @@ public class FileSystemWatcherService implements AutoCloseable {
 			LOGGER.error("", e);
 			
 			return Lists.newArrayList();
-		}		
-	}	
+		}
+	}
 
 	private Optional<SingleConfiguration> related(SingleConfiguration conf, final Path path) {
 		final File initialResource = conf.getPath();				

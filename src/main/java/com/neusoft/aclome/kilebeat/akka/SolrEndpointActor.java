@@ -8,7 +8,6 @@ import com.google.gson.JsonParser;
 import com.google.inject.Inject;
 import com.neusoft.aclome.kilebeat.akka.dto.EndPointFailed;
 import com.neusoft.aclome.kilebeat.akka.dto.NewLineEvent;
-import com.neusoft.aclome.kilebeat.akka.dto.NewScanEvent;
 import com.neusoft.aclome.kilebeat.configuration.SolrEndPointConfiuration;
 import com.neusoft.aclome.kilebeat.guice.GuiceAbstractActor;
 import com.neusoft.aclome.kilebeat.retry.RetryCommand;
@@ -69,11 +68,10 @@ public class SolrEndpointActor extends GuiceAbstractActor {
 				
 			})
 			.match(NewLineEvent.class, s -> send(s))
-			.match(NewScanEvent.class, s -> send(s))
 			.matchAny(o -> {
 				LOGGER.warn("not handled message", o);
 				unhandled(o);
-			})			
+			})
 			.build();
 	}
 	
@@ -91,18 +89,6 @@ public class SolrEndpointActor extends GuiceAbstractActor {
 	public void preStart() throws Exception {
 		super.preStart();
 		LOGGER.info("start {} with parent {}", getSelf().path(), getContext().parent().path());
-	}
-
-	private void send(NewScanEvent s) {
-		new RetryCommand(3, s.getScan_path_s()).run(new Callable<Void>() {						
-			@Override
-			public Void call() throws Exception {
-				sw.write(new JsonParser().parse(new Gson().toJson(s)).getAsJsonObject());
-				sw.flush();
-				LOGGER.info("send {}", s.toString());
-				return null;
-			}
-		});										
 	}
 	
 	private void send(NewLineEvent s) {

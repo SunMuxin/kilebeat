@@ -3,8 +3,8 @@ package com.neusoft.aclome.kilebeat.app;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.neusoft.aclome.kilebeat.akka.BulkTimeoutActor;
-import com.neusoft.aclome.kilebeat.akka.ExportsManagerActor;
 import com.neusoft.aclome.kilebeat.akka.FileSystemWatcherActor;
+import com.neusoft.aclome.kilebeat.akka.ManagerActor;
 import com.neusoft.aclome.kilebeat.akka.RetrieveActors;
 import com.neusoft.aclome.kilebeat.guice.GuiceActorUtils;
 import com.neusoft.aclome.kilebeat.guice.GuiceExtension;
@@ -23,7 +23,7 @@ public class KileBeatApplication {
     
 	@Inject
 	public KileBeatApplication(Injector injector) {
-		this.system = ActorSystem.create("kile", ConfigFactory.load("akka"));
+		this.system = ActorSystem.create("NilebeatSystem", ConfigFactory.load("nilebeat"));
 		this.injector = injector;
 	}
 	
@@ -32,14 +32,14 @@ public class KileBeatApplication {
 		//Add shutdownhook
 		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
 	        LOGGER.info("-------------------------------------------------");
-	        LOGGER.info(" KileBeat STOPPED");
+	        LOGGER.info(" NileBeat STOPPED");
 	        LOGGER.info("-------------------------------------------------");
 			
             system.terminate();
         }));
 		
 		system.registerExtension(GuiceExtension.provider);
-
+		
         //configure Guice
         final GuiceExtensionImpl guiceExtension = GuiceExtension.provider.get(system);
         guiceExtension.setInjector(injector);
@@ -56,8 +56,8 @@ public class KileBeatApplication {
 
         //XXX create before watcher because ... manager use watcher internally        
         system.actorOf(
-        	GuiceActorUtils.makeProps(system, ExportsManagerActor.class), "manager"
-    	);     
+        	GuiceActorUtils.makeProps(system, ManagerActor.class), "manager"
+    	);
         
         system.actorOf(
         	GuiceActorUtils.makeProps(system, FileSystemWatcherActor.class), "watcher"
@@ -68,9 +68,8 @@ public class KileBeatApplication {
     	);
         
         LOGGER.info("-------------------------------------------------");
-        LOGGER.info(" KileBeat STARTED");
+        LOGGER.info(" NileBeat STARTED");
         LOGGER.info("-------------------------------------------------");
-        
 
     }
 	

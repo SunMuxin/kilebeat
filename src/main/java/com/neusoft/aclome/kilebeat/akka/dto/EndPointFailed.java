@@ -1,23 +1,30 @@
 package com.neusoft.aclome.kilebeat.akka.dto;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
-import com.neusoft.aclome.kilebeat.configuration.ConfigurationEndpoint;
+import com.neusoft.aclome.kilebeat.configuration.EndpointConfiguration;
 
 import lombok.ToString;
 
 @ToString
-public class EndPointFailed {
-	private final ConfigurationEndpoint conf;
+public class EndPointFailed implements Serializable {
+	/**  
+	 * @Fields 失败原因
+	 * @author Muxin Sun
+	 * @date 2018年6月6日
+	*/
+	private static final long serialVersionUID = 1716793153486578811L;
+	private final EndpointConfiguration conf;
 	private final LocalDateTime now; 
 
-	public EndPointFailed(ConfigurationEndpoint conf) {
+	public EndPointFailed(EndpointConfiguration conf) {
 		this.conf = conf;
 		this.now = LocalDateTime.now();
 	}
 
-	public ConfigurationEndpoint getConf() {
+	public EndpointConfiguration getConf() {
 		return conf;
 	}
 

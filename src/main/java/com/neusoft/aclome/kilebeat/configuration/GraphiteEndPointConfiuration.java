@@ -9,6 +9,6 @@ import lombok.ToString;
 @Getter
 @ToString
 @EqualsAndHashCode
-public class GraphiteEndPointConfiuration implements ConfigurationEndpoint {
+public class GraphiteEndPointConfiuration implements EndpointConfiguration {
 
 }

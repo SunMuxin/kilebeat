@@ -11,7 +11,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @EqualsAndHashCode
-public class HttpEndPointConfiuration implements ConfigurationEndpoint {
+public class HttpEndPointConfiuration implements EndpointConfiguration {
 	private String path;
 	
 	public HttpEndPointConfiuration(Config config) {
