@@ -1,7 +1,7 @@
 # nilebeat
 [filebeat](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-overview.html) in java using [AKKA](http://akka.io)
 
-For the first release with support only three connector 
+For the release with support three connector 
 - generic http POST
 - kafka 
 - solr
