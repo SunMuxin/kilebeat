@@ -49,7 +49,6 @@ akka {
   
   cluster {  
     seed-nodes = [  
-      "akka.tcp://NilebeatSystem@127.0.0.1:2551",  
       "akka.tcp://NilebeatSystem@127.0.0.1:2551"]  
   
     #//#snippet  
