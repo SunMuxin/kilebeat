@@ -1,5 +1,5 @@
 # nilebeat
-利用 [AKKA](http://akka.io) 实现[filebeat](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-overview.html) 的推送数据功能，并增加了自动化生成日志正则表达式功能。
+利用 [AKKA](http://akka.io) 实现[filebeat](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-overview.html) 的日志数据采集和推送功能，并增加了自动化生成日志正则表达式功能。
 
 目前支持的推送有： 
 - generic http POST
