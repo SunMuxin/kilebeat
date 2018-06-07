@@ -11,8 +11,8 @@ We support text regex match. but, you need to add config in pom.xml(contact me):
 ```
 <dependency>
 	<artifactId>timeseries-for-apm</artifactId>
-	<groupId>com.neusoft.aclome</groupId>
-	<version>${neusoft.aclome.version}</version>
+	<groupId>com.XXXX.aclome</groupId>
+	<version>${XXXX.XXX.version}</version>
 </dependency>
 ```
 We also support stop and resume of endpoint connector (losing all messages in the period when server connector's was down).
