@@ -96,6 +96,7 @@ An example of json sent to the connector is
 	"result_s":"logger",
 	"ip_s":"192.168.1.9",
 	"host_s":"BC-VM-1418df5b51e34dfabcc357c96cce26b5",
+	"level_s":"INFO",
 	"content_s":"Metrics - group=thruput, name=thruput, instantaneous_kbps=1.2333010129753927",
 	"rs_timestamp":"2018-06-06T03:23:13Z",
 	"path_s":"/var/log/splunk",
