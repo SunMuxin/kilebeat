@@ -1,12 +1,13 @@
 # nilebeat
-[filebeat](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-overview.html) in java using [AKKA](http://akka.io)
+利用 [AKKA](http://akka.io) 实现[filebeat](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-overview.html) 的推送数据功能，并增加了自动化生成日志正则表达式功能。
 
-For the release with support three connector 
+目前支持的推送有： 
 - generic http POST
 - kafka 
 - solr
 
-We support text regex match. but, you need to add config in pom.xml(contact me):
+日志采集端的性能为，1000条/秒的采集速度小，4核CPU的消耗小于5%。
+如果需要自动生成：日志的正则表达式需要在pom.xml中加入如下配置（这个配置在我本地maven库中，联系我）:
 
 ```
 <dependency>
@@ -15,10 +16,10 @@ We support text regex match. but, you need to add config in pom.xml(contact me):
 	<version>${XXXX.XXX.version}</version>
 </dependency>
 ```
-We also support stop and resume of endpoint connector (losing all messages in the period when server connector's was down).
-Before considering a failed connection, up to 3 tests are performed (it will become a configuration). 
+在日志采集的过程中，网络中断不会影响程序程序运行，但是会导致断网过程中可能会导致日志丢失。
 
-Example configuration and usage:
+配置的例子如下：
+
 ```
 exports = [
     {
@@ -76,7 +77,7 @@ akka {
 
 ```
 
-Any export Object should contain some behaviour config
+同样对于推送包含以下个性化的配置，如采集规则等：
 
 ```
 bulk {
@@ -89,8 +90,7 @@ send-if-match = "^\\d.*" (it's clear)
 send-if-not-match = ".*[1-9].*"	(it's clear)
 
 ```
-
-An example of json sent to the connector is
+solr中获取的日志信息及日志模板信息的例子如下：
 ```
 {
 	"result_s":"logger",
