@@ -96,8 +96,12 @@ An example of json sent to the connector is
 	"result_s":"logger",
 	"ip_s":"localhost",
 	"host_s":"BC-VM-1418df5b51e34dfabcc357c96cce26b5",
-	"content_s":"Jun  6 11:23:13 localhost sshd[32738]: Connection closed by 127.0.0.1",
+	"content_s":"Metrics - group=thruput, name=thruput, instantaneous_kbps=1.2333010129753927",
 	"rs_timestamp":"2018-06-06T03:23:13Z",
-	"path_s":"/var/log/secure"
+	"path_s":"/var/log/secure",
+	"template_s":"Metrics - group=${1}, name=${2}, instantaneous_kbps=${3}",
+	"${1}":"thruput",
+	"${2}":"thruput",
+	"${3}":"1.2333010129753927"
 }
 ```
