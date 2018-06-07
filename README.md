@@ -6,6 +6,15 @@ For the release with support three connector
 - kafka 
 - solr
 
+We support text regex match. but, you need to add config in pom.xml(contact me):
+
+```
+<dependency>
+	<artifactId>timeseries-for-apm</artifactId>
+	<groupId>com.neusoft.aclome</groupId>
+	<version>${neusoft.aclome.version}</version>
+</dependency>
+```
 We also support stop and resume of endpoint connector (losing all messages in the period when server connector's was down).
 Before considering a failed connection, up to 3 tests are performed (it will become a configuration). 
 
