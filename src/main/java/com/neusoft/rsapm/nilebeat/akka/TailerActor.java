@@ -106,6 +106,7 @@ public class TailerActor extends GuiceAbstractActor implements TailerListener {
 				})
 				.matchEquals(Messages.ANCIENT_REGISTRATION, m -> {
 					ancients.add(getSender());
+					System.out.println(ancients);
 				})
 				.matchAny(o -> {
 					LOGGER.warn("not handled message", o);

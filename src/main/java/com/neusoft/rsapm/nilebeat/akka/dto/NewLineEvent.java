@@ -25,6 +25,7 @@ public class NewLineEvent implements Serializable {
 	 * @date 2018年6月6日
 	*/  
 	private static final long serialVersionUID = 4328234078076514941L;
+	private static final String LOCALHOST_IP = "127.0.0.1";
 
 	private final String result_s = "logger";
 
@@ -46,7 +47,7 @@ public class NewLineEvent implements Serializable {
 					InetAddress addr = addresses.nextElement();
 					if (addr!=null 
 							&& InetAddressUtils.isIPv4Address(addr.getHostAddress())
-							&& !addr.getHostAddress().equals("127.0.0.1")) {
+							&& !addr.getHostAddress().equals(LOCALHOST_IP)) {
 						this.ip_s = addr.getHostAddress();
 					}
 				}
