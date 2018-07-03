@@ -12,7 +12,7 @@
 ```
 <dependency>
 	<artifactId>timeseries-for-apm</artifactId>
-	<groupId>com.XXXX.aclome</groupId>
+	<groupId>com.XXXX.rsapm</groupId>
 	<version>${XXXX.XXX.version}</version>
 </dependency>
 ```
@@ -101,8 +101,8 @@ solr中获取的日志信息及日志模板信息的例子如下：
 	"rs_timestamp":"2018-06-06T03:23:13Z",
 	"path_s":"/var/log/splunk",
 	"template_s":"Metrics - group=${1}, name=${2}, instantaneous_kbps=${3}",
-	"${1}":"thruput",
-	"${2}":"thruput",
-	"${3}":"1.2333010129753927"
+	"param_1":"thruput",
+	"param_2":"thruput",
+	"param_3":"1.2333010129753927"
 }
 ```
