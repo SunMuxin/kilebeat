@@ -3,6 +3,9 @@ package com.neusoft.rsapm.nilebeat.util;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -54,6 +57,7 @@ import org.apache.http.util.EntityUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.neusoft.rsapm.tsp.api.OnlineLoggerProcessAPI;
 
 public class Util {
 	
@@ -292,6 +296,32 @@ public class Util {
 		final Pattern pattern = Pattern.compile(regex);
 		
 		return pattern.matcher(fileName).matches();
+	}
+	
+	public static void save(Path path, OnlineLoggerProcessAPI olAPI) throws FileNotFoundException, IOException{
+		if (!path.getParent().toFile().exists()){
+			path.getParent().toFile().mkdirs();
+		}
+		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(path.toFile()));
+		out.writeObject(olAPI);
+		out.close();
+	}
+	
+	public static OnlineLoggerProcessAPI open(Path path) throws FileNotFoundException, IOException, ClassNotFoundException{
+
+		if (!path.toFile().exists())
+			return null;
+		
+		ObjectInputStream in = new ObjectInputStream(new FileInputStream(path.toFile()));
+		OnlineLoggerProcessAPI object = (OnlineLoggerProcessAPI) in.readObject();
+		in.close();
+		return object;
+	}
+
+	public static void delete(Path path) {
+		if (path.toFile().exists() && path.toFile().isFile()) {
+			path.toFile().delete();
+		}
 	}
 }
 

@@ -17,12 +17,13 @@
 
     <groupId>com.neusoft.rsapm</groupId>
     <artifactId>nilebeat</artifactId>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.3-SNAPSHOT</version>
     <name>NileBeat</name>
     <description>filebeat in java with akka</description>
-
+    
     <properties>
-    	<neusoft.aclome.version>1.0.2-SNAPSHOT</neusoft.aclome.version>
+    	<maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
         <akka.version>2.5.3</akka.version>
         <akka.http.version>10.0.7</akka.http.version>
         <camel.core.version>2.18.0</camel.core.version>
@@ -39,7 +40,7 @@
 		<dependency>
 			<artifactId>timeseries-for-apm</artifactId>
 			<groupId>com.neusoft.rsapm</groupId>
-			<version>${neusoft.aclome.version}</version>
+			<version>1.1.1</version>
 		</dependency>
 		
 		<!-- lombok -->
@@ -216,7 +217,31 @@
 		</dependency>
 	
 	</dependencies>
+	<repositories>
+		<repository>
+			<id>alimaven</id>
+			<name>aliyun maven</name>
+			<url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+		</repository>
+		<repository>
+			<id>snapshot-repository.java.net</id>
+			<name>Java.net Snapshot Repository for Maven</name>
+			<url>https://maven.java.net/content/repositories/snapshots/</url>
+			<layout>default</layout>
+		</repository>
+		<repository>
+			<id>snapshots-repo</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
     <build>
+	    
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -284,4 +309,5 @@
             </plugin>
         </plugins>
     </build>
+    
 </project>

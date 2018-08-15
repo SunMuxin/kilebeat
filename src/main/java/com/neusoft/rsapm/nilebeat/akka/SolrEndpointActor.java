@@ -94,7 +94,7 @@ public class SolrEndpointActor extends GuiceAbstractActor {
 	}
 	
 	private void send(NewLineEvent s) {
-		new RetryCommand(3, s.getPath_s()).run(new Callable<Void>() {						
+		new RetryCommand(3, s.getPath()).run(new Callable<Void>() {						
 			@Override
 			public Void call() throws Exception {
 				sw.write(new JsonParser().parse(new Gson().toJson(s)).getAsJsonObject());

@@ -75,12 +75,12 @@ public class TailerActor extends GuiceAbstractActor implements TailerListener {
 		return receiveBuilder()
 				.match(NewLineEvent.class, job -> { // from self
 					// LOGGER.info("[row] {}", s);
-					if (conf.getRules().mustBeSent(job.getContent_s()) && ancients.isEmpty()) {
+					if (conf.getRules().mustBeSent(job.getContent()) && ancients.isEmpty()) {
 						getSender().tell(
 								new JobFailed("Service unavailable, try again later", job), 
 								getSender());
-						LOGGER.info("JobFailed {}", job.getContent_s());
-					} else if (conf.getRules().mustBeSent(job.getContent_s())) {
+						LOGGER.info("JobFailed {}", job.getContent());
+					} else if (conf.getRules().mustBeSent(job.getContent())) {
 						jobCounter++;
 						ancients.get(jobCounter % ancients.size()).forward(job, getContext());
 					}
